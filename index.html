@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <!--
+    REVIEW-REEL — ~16s (scene1 + scene2 live; scene3/4 nog als placeholder).
+    Volgorde: scene1 → T1 → scene2 → TX("Doorleef…") → [scene3] → TX("Ontdek…") → [scene4] → T2 → scene5
+    Scene3 en 4 wachten op: figma-charts-panel-nl.svg / figma-controls-panel-nl.svg + figma-cursor.svg
+  -->
+  <div data-hf-id="hf-hnc4" id="root" data-composition-id="cardano-animation-video" data-start="0" data-width="1920" data-height="1080">
+
+    <!-- 1 — Logo-intro (donkerblauw) 0:00–0:05 -->
+    <div data-hf-id="hf-o0gj" id="scene1" data-composition-id="scene1-logo-intro" data-composition-src="compositions/scene1-logo-intro.html" data-start="0" data-track-index="1"></div>
+
+    <!-- 2 — Dashboard overzicht (donkerblauw) 0:05–0:08 -->
+    <div data-hf-id="hf-7iwp" id="scene2" data-composition-id="scene2-dashboard" data-composition-src="compositions/scene2-dashboard.html" data-start="scene1" data-track-index="1"></div>
+
+    <!-- TX1 — tussentekst "Doorleef verschillende scenario's" (licht blauw) -->
+    <div data-hf-id="hf-sf4z" id="tx1" data-composition-id="scene-tussentekst" data-composition-src="compositions/scene-tussentekst.html" data-start="scene2" data-track-index="1" data-variable-values="{&quot;tekst&quot;:&quot;Doorleef verschillende scenario's&quot;,&quot;duur&quot;:&quot;2.5&quot;}"></div>
+
+    <!-- [PLACEHOLDER scene3-charts] — wacht op assets/figma-charts-panel-nl.svg -->
+
+    <!-- TX2 — tussentekst "Ontdek hoe jouw beleggingsstrategie uitpakt" (licht blauw) -->
+    <div data-hf-id="hf-t52t" id="tx2" data-composition-id="scene-tussentekst" data-composition-src="compositions/scene-tussentekst.html" data-start="tx1" data-track-index="1" data-variable-values="{&quot;tekst&quot;:&quot;Ontdek hoe jouw beleggingsstrategie uitpakt&quot;,&quot;duur&quot;:&quot;2.5&quot;}"></div>
+
+    <!-- [PLACEHOLDER scene4-controls] — wacht op assets/figma-controls-panel-nl.svg + figma-cursor.svg -->
+
+    <!-- 5 — Logo-outro met call-to-action (donkerblauw) -->
+    <div data-hf-id="hf-gtrx" id="scene5" data-composition-id="scene5-logo-outro" data-composition-src="compositions/scene5-logo-outro.html" data-start="tx2" data-track-index="1"></div>
+
+    <!-- T1 — mint-groene overgang donkerblauw→licht blauw, met openingstekst (over de cut scene1→scene2) -->
+    <div data-hf-id="hf-0rp3" id="transition-1" data-composition-id="transition-wipe" data-composition-src="compositions/transition-wipe.html" data-start="3.5" data-track-index="2" data-variable-values="{&quot;tekst&quot;:&quot;Ervaar om bestuurder in de WTP te zijn&quot;,&quot;duur&quot;:&quot;2&quot;}"></div>
+
+    <!-- T2 — mint-groene overgang licht blauw→donkerblauw richting outro (over de cut tx2→scene5 op 14s) -->
+    <div data-hf-id="hf-zcvx" id="transition-2" data-composition-id="transition-wipe" data-composition-src="compositions/transition-wipe.html" data-start="13.4" data-track-index="2" data-variable-values="{&quot;tekst&quot;:&quot;&quot;,&quot;duur&quot;:&quot;1.2&quot;}"></div>
+
+    <!-- Achtergrondmuziek over de hele video -->
+    <audio data-hf-id="hf-w3wo" id="bg-music" data-start="0" data-duration="18" data-volume="0.7" src="assets/background-music.wav"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["cardano-animation-video"] = tl;
+    </script>
+  </div>
+</body>
+</html>

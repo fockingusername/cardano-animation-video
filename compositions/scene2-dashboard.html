@@ -1,0 +1,156 @@
+<template id="scene2-dashboard-template">
+  <div id="scene2-dashboard" data-composition-id="scene2-dashboard" data-width="1920" data-height="1080">
+
+    <div id="db-stage" class="clip"
+         data-start="0" data-duration="4" data-track-index="0"
+         style="position:absolute; inset:0; width:1920px; height:1080px;
+                display:flex; align-items:center; justify-content:center;">
+
+      <!-- Gestileerd tablet-frame (iPad-achtig: 4:3-verhouding, bezel, camera, home-bar) -->
+      <div id="tablet-frame">
+        <div id="tablet-camera"></div>
+        <div id="db-window">
+          <img id="db-img" src="../assets/figma-dashboard-overview-nl.svg" alt="PensionSim dashboard overzicht" />
+        </div>
+        <div id="tablet-home"></div>
+      </div>
+
+      <!-- Profielkaarten — dalen vanuit bovenkant in beeld, over het tablet -->
+      <!-- border-radius 25px + padding 20px per kaart zoals brief -->
+      <div id="cards-layer">
+        <div class="card-wrap" id="card-1">
+          <img src="../assets/profile-1.svg" width="450" height="426" alt="Peter" />
+        </div>
+        <div class="card-wrap" id="card-2">
+          <img src="../assets/profile-2.svg" width="450" height="426" alt="Naomi" />
+        </div>
+        <div class="card-wrap" id="card-3">
+          <img src="../assets/profile-3.svg" width="450" height="426" alt="Mike" />
+        </div>
+      </div>
+    </div>
+
+    <style>
+      #scene2-dashboard { background: #000f47; overflow: hidden; }
+
+      /* ── Tablet-frame (bezel) ── */
+      #tablet-frame {
+        position: relative;
+        width: 1160px;
+        height: 800px;
+        background: #e0e0e0;
+        border-radius: 20px;
+        padding: 22px;
+        box-sizing: border-box;
+        box-shadow: 0 48px 120px rgba(0,0,0,0.55), 0 12px 36px rgba(0,0,0,0.30);
+        z-index: 1;
+        opacity: 0;
+      }
+
+      /* Camera-dot bovenin de bezel */
+      #tablet-camera {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #aaa;
+        z-index: 2;
+      }
+
+      /* Home-bar onderin de bezel */
+      #tablet-home {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        margin-left: -40px;
+        width: 80px;
+        height: 4px;
+        border-radius: 2px;
+        background: #aaa;
+      }
+
+      /* ── Schermgebied ── */
+      #db-window {
+        position: relative;
+        width: 1116px; /* 1160 - 2×22 */
+        height: 756px; /* 800 - 2×22 */
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      #db-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1116px;
+        height: auto;
+      }
+
+      /* ── Profielkaarten ── */
+      /*
+        3 kaarten à 450×426 + padding 20px = 490×466 elk
+        3×490 + 2×24 (gutter) = 1518px breed
+        left  = (1920 - 1518) / 2 = 201px
+        top   = (1080 - 466)  / 2 = 307px
+      */
+      #cards-layer {
+        position: absolute;
+        top: 307px;
+        left: 201px;
+        width: 1518px;
+        display: flex;
+        gap: 24px;
+        z-index: 3;
+      }
+
+      .card-wrap {
+        background: #ffffff;
+        border-radius: 25px;
+        padding: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.40), 0 6px 16px rgba(0,0,0,0.25);
+        flex-shrink: 0;
+        opacity: 0;
+      }
+
+      .card-wrap img {
+        display: block;
+        width: 450px;
+        height: 426px;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Tablet venster rustig inschuiven
+      tl.fromTo("#tablet-frame",
+        { opacity: 0, scale: 0.94, y: 28 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0);
+
+      // Dashboard scrollt omhoog in de tablet
+      tl.fromTo("#db-img",
+        { y: 0 },
+        { y: -140, duration: 1.8, ease: "sine.inOut" }, 0.8);
+
+      // 3 profielkaarten dalen vanuit boven in beeld, staggered 0.15s
+      tl.fromTo("#card-1",
+        { opacity: 0, y: -500 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.40);
+      tl.fromTo("#card-2",
+        { opacity: 0, y: -500 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.55);
+      tl.fromTo("#card-3",
+        { opacity: 0, y: -500 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.70);
+
+      // Volle 4s aanhouden
+      tl.set({}, {}, 4);
+
+      window.__timelines["scene2-dashboard"] = tl;
+    </script>
+  </div>
+</template>

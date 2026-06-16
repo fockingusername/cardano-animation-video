@@ -1,0 +1,76 @@
+<html data-composition-variables='[
+  {"id":"tekst","type":"string","label":"Tekst tijdens de overgang (leeg = geen tekst)","default":""},
+  {"id":"duur","type":"number","label":"Totale duur in seconden","default":"0.8"}
+]'>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <template id="transition-wipe-template">
+    <div id="transition-wipe" data-composition-id="transition-wipe" data-width="1920" data-height="1080">
+
+      <!-- Mint-groen vlak dat rustig in- en uitveegt; tekst staat erin gecentreerd -->
+      <div id="wipe-panel" class="clip" data-start="0" data-track-index="0"
+           style="position:fixed; inset:0; width:100%; height:100%; background:#3fd6a0;
+                  z-index:9999; will-change:transform;
+                  display:flex; align-items:center; justify-content:center;
+                  padding:0 200px; box-sizing:border-box;">
+        <div id="wipe-tekst"></div>
+      </div>
+
+      <style>
+        #transition-wipe { background: transparent; }
+        #wipe-tekst {
+          font-family: "Noto Sans", system-ui, sans-serif;
+          font-weight: 900;
+          font-size: 80px;
+          line-height: 1.12;
+          text-align: center;
+          color: #000f47;
+          max-width: 1400px;
+          opacity: 0;
+        }
+      </style>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const { tekst, duur } = __hyperframes.getVariables();
+        const totaal = Number(duur) || 0.8;
+
+        const panel = document.querySelector("#wipe-panel");
+        panel.setAttribute("data-duration", totaal);
+
+        const elTekst = document.querySelector("#wipe-tekst");
+        if (tekst) elTekst.textContent = tekst;
+
+        const tl = gsap.timeline({ paused: true });
+
+        // Fase 1: groen vlak schuift rustig in tot volledige dekking (power2.inOut, ~0.4s)
+        tl.fromTo("#wipe-panel",
+          { xPercent: -100 },
+          { xPercent: 0, duration: 0.4, ease: "power2.inOut" }, 0);
+
+        // Tekst (alleen bij T1): zacht in, ruime standtijd, zacht uit
+        if (tekst) {
+          tl.fromTo("#wipe-tekst",
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.3);
+          tl.to("#wipe-tekst",
+            { opacity: 0, duration: 0.3, ease: "power2.in" }, Math.max(0.8, totaal - 0.5));
+        }
+
+        // Fase 2: groen vlak schuift rustig verder uit en onthult de volgende scene
+        tl.to("#wipe-panel",
+          { xPercent: 100, duration: 0.4, ease: "power2.inOut" }, totaal - 0.4);
+
+        tl.set({}, {}, totaal);
+
+        window.__timelines["transition-wipe"] = tl;
+      </script>
+    </div>
+  </template>
+</body>
+</html>

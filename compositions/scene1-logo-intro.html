@@ -1,0 +1,94 @@
+<template id="scene1-logo-intro-template">
+  <div id="scene1-logo-intro" data-composition-id="scene1-logo-intro" data-width="1920" data-height="1080">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <div id="stage" class="clip"
+         data-start="0" data-duration="5" data-track-index="0"
+         style="position:absolute; inset:0; width:1920px; height:1080px;
+                display:flex; flex-direction:column; align-items:center; justify-content:center;
+                gap:52px;">
+
+      <!-- Zachte glow achter het logo voor diepte (kalm, geen flits) -->
+      <div id="glow"></div>
+
+      <!-- Wit Cardano-logo, gecentreerd -->
+      <div id="logo-wrap">
+        <svg id="logo" viewBox="0 0 359.15 71.94" xmlns="http://www.w3.org/2000/svg" aria-label="Cardano">
+          <path fill="#ffffff"
+            d="M373.5,67.66c0,11.24-6.89,19.45-17.12,19.45s-17.13-8.21-17.13-19.45,6.89-19.46,17.13-19.46,17.12,8.21,17.12,19.46Zm-342.12,0C31.38,56.92,37.46,48.2,48,48.2c7.49,0,12.76,4.26,14.28,11.25h8.51C68.67,47.9,60.25,40.81,48,40.81c-15.2,0-25.13,11-25.13,26.85S32.8,94.51,48,94.51c12.25,0,20.67-7.1,22.79-18.65H62.28c-1.52,7-6.79,11.25-14.28,11.25-10.54,0-16.62-8.71-16.62-19.45ZM127,41.82h-7.2l-1.11,8.11c-3.55-5.58-9.53-9.12-17.73-9.12-14.29,0-24.83,11-24.83,26.85S86.69,94.51,101,94.51c8.2,0,14.18-3.55,17.73-9.12l1.11,8.1H127V41.82ZM84.66,67.66c0-11.35,7-19.46,17-19.46,10.33,0,17.12,9.22,17.12,19.46S112,87.11,101.69,87.11c-10,0-17-8.1-17-19.45Zm52.45-25.84V93.49h8.31V66.34c0-9,3.74-16.41,14.69-16.41h3.65V41.82H161c-8.41,0-12.67,3.14-15.6,8.11l-1.12-8.11ZM207,22.57V50.13c-3.55-5.68-9.53-9.32-17.73-9.32-14.29,0-24.83,11-24.83,26.85S175,94.51,189.26,94.51c8.2,0,14.18-3.55,17.73-9.12l1.11,8.1h7.2V22.57ZM172.94,67.66c0-11.35,7-19.46,17-19.46,10.33,0,17.12,9.22,17.12,19.46S200.3,87.11,190,87.11c-10,0-17-8.1-17-19.45Zm94.66-7.81c0-12.26-7.5-19-20.77-19-12.47,0-20.67,6.07-21.89,16.31h8.31c1-5.17,5.47-9,13.17-9,8.11,0,12.87,4.26,12.87,11.75V63h-15.2c-13.37,0-20.77,5.77-20.77,15.8s7.6,15.71,18.64,15.71c8.31,0,13.68-3.25,17.74-9.12l.71,8.1h7.19V59.85Zm-8.31,10v2.53c0,9-6.28,15-16.11,15-7.29,0-11.55-3.24-11.55-9,0-5.48,4-8.51,12.77-8.51ZM277,93.49h8.31V67.66c0-11.86,5.78-19.26,15.71-19.26,8.81,0,13.88,5.88,13.88,16.62V93.49h8.3v-29c0-16.31-8.41-23.7-20.77-23.7-7.6,0-13.27,2.73-17.22,8.41l-1-7.4H277V93.49Zm53.76-25.83c0,15.8,10.54,26.85,25.64,26.85S382,83.46,382,67.66s-10.54-26.85-25.63-26.85-25.64,11-25.64,26.85Z"
+            transform="translate(-22.87 -22.57)"/>
+        </svg>
+      </div>
+
+      <!-- Productnaam -->
+      <div id="brand">PensionSim</div>
+    </div>
+
+    <style>
+      #scene1-logo-intro {
+        background: #000f47;
+        overflow: hidden;
+      }
+
+      #glow {
+        position: absolute;
+        top: 44%;
+        left: 50%;
+        width: 1100px;
+        height: 1100px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(206,236,255,0.16) 0%, rgba(206,236,255,0.05) 38%, rgba(0,15,71,0) 70%);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+      }
+
+      #logo-wrap {
+        position: relative;
+        z-index: 1;
+        width: 760px;
+        opacity: 0;
+      }
+
+      #logo { display: block; width: 100%; height: auto; }
+
+      #brand {
+        position: relative;
+        z-index: 1;
+        font-family: "Noto Sans", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 64px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #ffffff;
+        opacity: 0;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Rustige fade-in + heel lichte scale-up van het logo (kalm, geen flits)
+      tl.fromTo("#glow",
+        { opacity: 0 },
+        { opacity: 1, duration: 1.4, ease: "sine.out" }, 0.2);
+      tl.fromTo("#logo-wrap",
+        { opacity: 0, scale: 0.94 },
+        { opacity: 1, scale: 1, duration: 1.0, ease: "power2.out" }, 0.3);
+
+      // "PensionSim" verschijnt zacht onder het logo, met rust om te lezen
+      tl.fromTo("#brand",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 1.3);
+
+      // Lange rust tot het einde — de kleurwissel naar licht blauw gebeurt via T1 (overlay)
+      tl.set({}, {}, 5);
+
+      window.__timelines["scene1-logo-intro"] = tl;
+    </script>
+  </div>
+</template>
