@@ -1,6 +1,7 @@
 <html data-composition-variables='[
   {"id":"tekst","type":"string","label":"Tekst tijdens de overgang (leeg = geen tekst)","default":""},
-  {"id":"duur","type":"number","label":"Totale duur in seconden","default":"0.8"}
+  {"id":"duur","type":"number","label":"Totale duur in seconden","default":"0.8"},
+  {"id":"kleur","type":"string","label":"Achtergrondkleur van het wipe-vlak","default":"#3fd6a0"}
 ]'>
 <head>
   <meta charset="UTF-8">
@@ -37,10 +38,11 @@
 
       <script>
         window.__timelines = window.__timelines || {};
-        const { tekst, duur } = __hyperframes.getVariables();
+        const { tekst, duur, kleur } = __hyperframes.getVariables();
         const totaal = Number(duur) || 0.8;
 
         const panel = document.querySelector("#wipe-panel");
+        if (kleur) panel.style.background = kleur;
         panel.setAttribute("data-duration", totaal);
 
         const elTekst = document.querySelector("#wipe-tekst");

@@ -105,57 +105,84 @@ Een rustig **licht blauw scherm (`#ceecff`)** met één centrale zin in donkere/
 - `assets/profile-3.svg` (Kaart Mike - unhappy)
 
 **Beschrijving:**
-Het overzichtsdashboard verschijnt als zwevend tablet (enigzins herkenbaar als ipad maar gestileerd, met tablet dimensions) venster op de **donker blauwe** achtergrond. 
+Het overzichtsdashboard verschijnt als zwevend tablet (enigzins herkenbaar als ipad maar gestileerd, met tablet dimensions) venster op de **licht blauwe** achtergrond (`#ceecff`). 
 En scrollt in het zwevende app venster het dashboard door.  
 **Nederlandstalige** schermversie gebruiken.
 
 **Animatiewensen:**
 - Tablet venster komt rustig binnen met heel lichte scale-up + zachte schaduw (`power2.out`, ~0.8 s).
-- De figma-dashboard-overview-nl.svg wordt rustig op de tablet doorgescrolt. 
+- De figma-dashboard-overview-nl.svg wordt rustig op de tablet doorgescrold. 
+- Voordat het tablet venster verschijnt en voordat de profielkaarten in beeld komt van rechts naar links een caption in beeld.
+- Deze stopt tegen de linkerzijde van het scherm, heeft een blauwe achtergrond met witte tekst "Doorleef verschillende scenario's". 
 - Als de deze volledig is doorgescrollt verschijnen vanaf de bovenzijde van het screen drie cards in beeld. 
 - De cards hebben een borderradius van 25px, en een padding van 20px.
 - De worden horizontaal naast elkaar met een nette gutter voor tussenruimte, over de tablet geplaatst.
 - Per card toont een profiel. Gebruik hier voor de profile svgs.
-- Korte standtijd, dan tussentekst "Doorleef verschillende scenario's" (0:07).
+- Per card de progress bar animeren.
+- Laat de cards wanneer geladen 1.5 sec in beeld
+- Korte standtijd, dan tussentekst "Doorleef verschillende scenario's" (0:07). VERBERG DEZE VOORLOPIG
+- laat de caption staan op deze positie in scene3
 
 ---
 
-## scene3-charts ⏳ (wacht op NL-asset)
+## scene3-charts 👀
 
 **Bestand:** `compositions/scene3-charts.html`
 **Duur:** ~5 s (0:07–0:12)
 **Assets:**
-- `assets/figma-charts-panel-nl.svg` (Nederlandstalige scenario-/marktdata-grafieken: vermogensallocatie, reserve, pensioen vs prijsindex, marktdata)
+- `assets/ratio-1.svg` (Kaart ratio)
+- `assets/solidariteits-2.svg` (Kaart solidariteitsreserve)
+- `assets/pensioen-3.svg` (Kaart pensioen)
+- `assets/market-1.svg` (Kaart market)
+- `assets/vervangingratio-2.svg` (Kaart vervangingsratio)
 
 **Beschrijving:**
-Aandacht verschuift naar de scenario- en marktdata-grafieken. Panelen schuiven rustig naar voren zodat ze goed leesbaar zijn; lijnen en vlakken tekenen zich kalm op. **Nederlandstalige** labels.
+ Het tablet venster met figma-dashboard-overview-nl.svg staat faded in beeld zoals voor de overgang, er wordt gescrolld naar het onderste gedeelte van het scherm.  Toon direct de 3 profile cards, deze verdwijnen naar de onderzijde uit beeld. Wanneer de laatste profile card is verdwenen,  verschijnen vanaf de bovenzijde van het screen drie cards in beeld met de kaarten.
+  **licht blauwe** achtergrond (`#ceecff`). 
+**Nederlandstalige** schermversie gebruiken.
 
 **Animatiewensen:**
-- Grafiekpanelen schuiven rustig naar voren (`power2.out`).
-- Lijn-grafieken "draw-on", vlakdiagram bouwt rustig van onder op.
-- Staggered per paneel, ~0.3 s tussen elk — bewust kalm tempo.
-- Daarna tussentekst "Ontdek hoe jouw beleggingsstrategie uitpakt" (0:12).
+- Het tablet venster met figma-dashboard-overview-nl.svg staat faded in beeld zoals voor de overgang, verberg de 3 profile cards.
+- Vervolgens verdwijnen de profile cards van het screen via de onderzijde van het screen. 
+- Vervolgens verschijnen vanaf de bovenzijde van het screen de drie nieuwe cards met de kaarten in beeld. 
+- Laat de cards wanneer geladen 1.5 sec in beeld
+- Vervolgens verdwijnen de nieuwe cards van het screen via de bovenzijde van het screen. 
+- Vervolgens verschijnen vanaf de linker en de rechterzijde van het screen de twee laatste cards in beeld, deze nemen samen dezelfde breedte in op scherm als de drie kaarten. 
+- Deze laatste twee charts moeten de cards netjes vullen.
+- De cards hebben een borderradius van 25px, en een padding van 20px.
+- De worden horizontaal naast elkaar met een nette gutter voor tussenruimte, over de tablet geplaatst.
+- Per card toont een kaart. 
+- Laat de cards wanneer geladen 1.5 sec in beeld
+- Korte standtijd, dan tussentekst "Ontdek hoe jouw beleggingsstrategie uitpakt" (0:12).
 
 ---
 
-## scene4-controls ⏳ (wacht op NL-asset + cursor)
+## scene4-controls ⏳ (cursor)
 
 **Bestand:** `compositions/scene4-controls.html`
 **Duur:** ~14 s (0:12–0:28)
 **Assets:**
 - `assets/figma-controls-panel-nl.svg` (Nederlandstalig beleidspaneel: sliders, cohort-grafieken, wijzigingen-tabel, knoppen incl. "Uitvoeren")
-- `assets/figma-cursor.svg` (muiscursor)
+- `assets/cursor.svg` (muiscursor)
+
+**Assets specifieke zaken**
+- figma-controls-panel-nl: het menu (bestaande uit: overzicht, markt, nieuws, beleid) dient sticky te zijn en niet mee te scrollen. 
+- Het block in de rechterkolom met als titel "Wijzigingen" dient ook sticky te zijn en niet mee te scrollen. Zorg dat de blauwe button ook op zijn positie blijft.
+- Verberg het rechterblok op het scrollende gedeelte.
+- Zorg voor eenzelfde achtergrond kleur (licht grijs).
 
 **Beschrijving:**
-Het beleidsgedeelte. Het control-paneel komt rustig in beeld. In plaats van de eerdere pop-ups wordt nu **langzaam naar beneden gescrold** door het paneel, zodat de sliders en grafieken vanzelf in beeld komen — de pop-ups zijn daarmee niet meer nodig. Een cursor beweegt kalm over de interface. **Nederlandstalige** labels en knoppen.
+Het beleidsgedeelte. Het control-paneel komt rustig in beeld. In plaats van de eerdere pop-ups wordt nu **langzaam naar beneden gescrold** door het paneel, zodat de sliders en grafieken vanzelf in beeld komen — de pop-ups zijn daarmee niet meer nodig. Het paneel dient iets groter te zijn in deze scene om leesbaarheid te waarborgen. 
+
 
 **Animatiewensen:**
 - Paneel rustig in beeld (`power2.out`).
 - **Vertraagde scroll** naar beneden door het paneel (`sine.inOut`, ruim uitgesmeerd over de scene) — dit vervangt de pop-ups.
-- Cursor beweegt kalm tussen de controls (`sine.inOut`); sliders en grafieken reageren rustig mee.
+- De scroll wordt opgedeeld in secties, zodat deze goed leesbaar zijn.
 - Wijzigingen-tabel: getallen rustig faden in.
 - Geen snelle bewegingen — alles goed leesbaar en te volgen.
-- Slot: rustige overgang naar T2.
+- Wanneer de scroll volledig is fade de cursor in beeld onder de "uitvoeren" knop op passende afstand.
+- De cursor klikt de "Uitvoeren" knop wat rustig de overgang naar T2 start.
 
 ---
 

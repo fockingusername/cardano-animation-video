@@ -1,8 +1,12 @@
 <template id="scene2-dashboard-template">
   <div id="scene2-dashboard" data-composition-id="scene2-dashboard" data-width="1920" data-height="1080">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700;900&display=swap" rel="stylesheet">
+
     <div id="db-stage" class="clip"
-         data-start="0" data-duration="4" data-track-index="0"
+         data-start="0" data-duration="5.5" data-track-index="0"
          style="position:absolute; inset:0; width:1920px; height:1080px;
                 display:flex; align-items:center; justify-content:center;">
 
@@ -15,23 +19,32 @@
         <div id="tablet-home"></div>
       </div>
 
+      <!-- Caption: schuift van rechts naar links, stopt aan de linkerzijde -->
+      <div id="sc2-caption">Doorleef verschillende scenario's</div>
+
       <!-- Profielkaarten — dalen vanuit bovenkant in beeld, over het tablet -->
       <!-- border-radius 25px + padding 20px per kaart zoals brief -->
       <div id="cards-layer">
         <div class="card-wrap" id="card-1">
           <img src="../assets/profile-1.svg" width="450" height="426" alt="Peter" />
+          <!-- witte cover over groene balk: SVG x=71,y=222,w=314,h=10 → +20px padding -->
+          <div class="bar-cover" id="bar-cover-1"></div>
         </div>
         <div class="card-wrap" id="card-2">
           <img src="../assets/profile-2.svg" width="450" height="426" alt="Naomi" />
+          <!-- witte cover over blauwe balk: SVG x≈69,y=222,w=258,h=10 → +20px padding -->
+          <div class="bar-cover" id="bar-cover-2"></div>
         </div>
         <div class="card-wrap" id="card-3">
           <img src="../assets/profile-3.svg" width="450" height="426" alt="Mike" />
+          <!-- witte cover over rode balk: SVG x≈73,y=226,w=260,h=10 → +20px padding -->
+          <div class="bar-cover" id="bar-cover-3"></div>
         </div>
       </div>
     </div>
 
     <style>
-      #scene2-dashboard { background: #000f47; overflow: hidden; }
+      #scene2-dashboard { background: #ceecff; overflow: hidden; }
 
       /* ── Tablet-frame (bezel) ── */
       #tablet-frame {
@@ -42,7 +55,7 @@
         border-radius: 20px;
         padding: 22px;
         box-sizing: border-box;
-        box-shadow: 0 48px 120px rgba(0,0,0,0.55), 0 12px 36px rgba(0,0,0,0.30);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.20), 0 6px 20px rgba(0,0,0,0.12);
         z-index: 1;
         opacity: 0;
       }
@@ -110,7 +123,7 @@
         background: #ffffff;
         border-radius: 25px;
         padding: 20px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.40), 0 6px 16px rgba(0,0,0,0.25);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.10);
         flex-shrink: 0;
         opacity: 0;
       }
@@ -120,11 +133,46 @@
         width: 450px;
         height: 426px;
       }
+
+      /* ── Caption ── */
+      #sc2-caption {
+        position: absolute;
+        top: 870px; left: 0;
+        background: #000f47;
+        color: #ffffff;
+        font-family: "Noto Sans", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 52px;
+        letter-spacing: 0.01em;
+        padding: 22px 48px;
+        white-space: nowrap;
+        opacity: 0;
+        z-index: 5;
+      }
+
+      /* ── Progress bar covers ── */
+      /* Witte vlakken exact over de gekleurde balk in de SVG.
+         scaleX 1→0 met transformOrigin rechts onthult de balk van links naar rechts. */
+      .card-wrap { position: relative; }
+      .bar-cover {
+        position: absolute;
+        background: #ffffff;
+        height: 10px;
+        pointer-events: none;
+      }
+      #bar-cover-1 { left: 91px; top: 242px; width: 314px; }
+      #bar-cover-2 { left: 89px; top: 242px; width: 258px; }
+      #bar-cover-3 { left: 93px; top: 246px; width: 260px; }
     </style>
 
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
+
+      // Caption schuift meteen in vanaf rechts — arriveert vóór het tablet zichtbaar is
+      tl.fromTo("#sc2-caption",
+        { opacity: 1, x: 1920 },
+        { x: 0, duration: 0.8, ease: "power2.out" }, 0);
 
       // Tablet venster rustig inschuiven
       tl.fromTo("#tablet-frame",
@@ -135,6 +183,10 @@
       tl.fromTo("#db-img",
         { y: 0 },
         { y: -140, duration: 1.8, ease: "sine.inOut" }, 0.8);
+
+      // Tablet vervaagt als de kaarten in beeld komen (diepte-effect)
+      tl.to("#tablet-frame",
+        { filter: "blur(6px)", duration: 0.6, ease: "power2.inOut" }, 2.35);
 
       // 3 profielkaarten dalen vanuit boven in beeld, staggered 0.15s
       tl.fromTo("#card-1",
@@ -147,8 +199,20 @@
         { opacity: 0, y: -500 },
         { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.70);
 
-      // Volle 4s aanhouden
-      tl.set({}, {}, 4);
+      // Progress bars: cover vegt weg van rechts → balk verschijnt van links naar rechts
+      // Start ~0.05s nadat elke kaart is geland
+      tl.fromTo("#bar-cover-1",
+        { scaleX: 1, transformOrigin: "right center" },
+        { scaleX: 0, duration: 0.6, ease: "power2.inOut" }, 2.95);
+      tl.fromTo("#bar-cover-2",
+        { scaleX: 1, transformOrigin: "right center" },
+        { scaleX: 0, duration: 0.6, ease: "power2.inOut" }, 3.10);
+      tl.fromTo("#bar-cover-3",
+        { scaleX: 1, transformOrigin: "right center" },
+        { scaleX: 0, duration: 0.6, ease: "power2.inOut" }, 3.25);
+
+      // 1.5s standtijd na laatste progress bar (done at ~3.85s) → scene 5.5s
+      tl.set({}, {}, 5.5);
 
       window.__timelines["scene2-dashboard"] = tl;
     </script>
