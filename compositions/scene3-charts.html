@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700;900&display=swap" rel="stylesheet">
 
     <div id="sc3-stage" class="clip"
-         data-start="0" data-duration="6" data-track-index="0"
+         data-start="0" data-duration="8" data-track-index="0"
          style="position:absolute; inset:0; width:1920px; height:1080px;
                 display:flex; align-items:center; justify-content:center;">
 
@@ -70,7 +70,7 @@
       /* Caption — zelfde positie als scene2, direct zichtbaar */
       #sc3-caption {
         position: absolute;
-        top: 870px; left: 0;
+        top: 895px; left: 0;
         background: #000f47;
         color: #ffffff;
         font-family: "Noto Sans", system-ui, sans-serif;
@@ -85,8 +85,8 @@
       /* Tablet al zichtbaar en wazig — geen entrance animatie */
       #sc3-tablet-frame {
         position: relative;
-        width: 1160px;
-        height: 800px;
+        width: 1400px;
+        height: 900px;
         background: #e0e0e0;
         border-radius: 20px;
         padding: 22px;
@@ -104,11 +104,12 @@
         width: 80px; height: 4px; border-radius: 2px; background: #aaa;
       }
       #sc3-db-window {
-        position: relative; width: 1116px; height: 756px;
+        position: relative; width: 1356px; height: 856px;
         border-radius: 8px; overflow: hidden;
       }
       #sc3-db-img {
-        position: absolute; top: 0; left: 0; width: 1116px; height: auto;
+        position: absolute; top: 0; left: 0; width: 1356px; height: auto;
+        transform: translateY(-659px);
       }
 
       /* Profielkaarten — al zichtbaar (eindpositie scene2) */
@@ -172,41 +173,44 @@
 
     <script>
       window.__timelines = window.__timelines || {};
+      // Sluit aan op eindpositie scene 2: dashboard onderaan, tablet wazig
+      gsap.set("#sc3-db-img", { y: -659 });
+      gsap.set(".sc3-line-cover", { scaleX: 1, transformOrigin: "right center" });
       const tl = gsap.timeline({ paused: true });
-
-      // Dashboard scrollt door naar het onderste gedeelte (graphs/charts)
-      tl.fromTo("#sc3-db-img", { y: -140 }, { y: -380, duration: 2.0, ease: "sine.inOut" }, 0);
 
       // Profielkaarten verdwijnen via de onderzijde van het scherm
       tl.to("#sc3-profile-1", { y: 700, opacity: 0, duration: 0.4, ease: "power2.in" }, 0.0);
       tl.to("#sc3-profile-2", { y: 700, opacity: 0, duration: 0.4, ease: "power2.in" }, 0.1);
       tl.to("#sc3-profile-3", { y: 700, opacity: 0, duration: 0.4, ease: "power2.in" }, 0.2);
 
-      // Golf 1: 3 grafiekkaarten dalen vanuit boven (na profielkaarten)
-      tl.fromTo("#sc3-w1-card-1", { opacity: 0, y: -500 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.8);
-      tl.fromTo("#sc3-w1-card-2", { opacity: 0, y: -500 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.9);
-      tl.fromTo("#sc3-w1-card-3", { opacity: 0, y: -500 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.0);
+      // Golf 1: 3 grafiekkaarten dalen vanuit boven in beeld
+      tl.fromTo("#sc3-w1-card-1", { opacity: 0, y: -500 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.7);
+      tl.fromTo("#sc3-w1-card-2", { opacity: 0, y: -500 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.85);
+      tl.fromTo("#sc3-w1-card-3", { opacity: 0, y: -500 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.0);
 
-      // Golf 1: grafieklijntjes onthullen van links naar rechts (cover schuift weg)
-      tl.fromTo("#sc3-lc-1", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 1.3);
-      tl.fromTo("#sc3-lc-2", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 1.45);
-      tl.fromTo("#sc3-lc-3", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 1.6);
+      // Golf 1: grafieklijntjes onthullen (kaarten landen ~1.5s)
+      tl.fromTo("#sc3-lc-1", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 1.5);
+      tl.fromTo("#sc3-lc-2", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 1.65);
+      tl.fromTo("#sc3-lc-3", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 1.8);
 
-      // Golf 1: 1.5s standtijd na laatste kaart (in bij 1.4s) → exit start 2.9s
-      tl.to("#sc3-w1-card-1", { y: -600, opacity: 0, duration: 0.4, ease: "power2.in" }, 2.9);
-      tl.to("#sc3-w1-card-2", { y: -600, opacity: 0, duration: 0.4, ease: "power2.in" }, 3.0);
-      tl.to("#sc3-w1-card-3", { y: -600, opacity: 0, duration: 0.4, ease: "power2.in" }, 3.1);
+      // Golf 1: ~2.7s standtijd na landing → exit via bovenzijde
+      tl.to("#sc3-w1-card-1", { y: -600, opacity: 0, duration: 0.4, ease: "power2.in" }, 4.2);
+      tl.to("#sc3-w1-card-2", { y: -600, opacity: 0, duration: 0.4, ease: "power2.in" }, 4.3);
+      tl.to("#sc3-w1-card-3", { y: -600, opacity: 0, duration: 0.4, ease: "power2.in" }, 4.4);
 
-      // Golf 2: vanuit links + rechts, 0.2s na golf 1 volledig weg (3.5s)
-      tl.fromTo("#sc3-w2-card-1", { opacity: 0, x: -1000 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 3.7);
-      tl.fromTo("#sc3-w2-card-2", { opacity: 0, x: 1000 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 3.7);
+      // Golf 2: kaart 1 vanuit links, kaart 2 vanuit rechts
+      tl.fromTo("#sc3-w2-card-1", { opacity: 0, x: -1000 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 4.8);
+      tl.fromTo("#sc3-w2-card-2", { opacity: 0, x: 1000 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 4.8);
 
-      // Golf 2: grafieklijntjes onthullen van links naar rechts
-      tl.fromTo("#sc3-lc-4", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 4.3);
-      tl.fromTo("#sc3-lc-5", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 4.45);
+      // Golf 2: grafieklijntjes onthullen (kaarten landen ~5.45s)
+      tl.fromTo("#sc3-lc-4", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 5.3);
+      tl.fromTo("#sc3-lc-5", { scaleX: 1, transformOrigin: "right center" }, { scaleX: 0, duration: 0.8, ease: "power2.inOut" }, 5.45);
 
-      // 1.5s standtijd na golf 2 in beeld (in bij 4.2s) → scene 6s
-      tl.set({}, {}, 6);
+      // Cinematische zoom-out: schaal het hele scherm rustig terug en fade uit
+      tl.to("#sc3-stage", { scale: 0.82, opacity: 0, duration: 1.0, ease: "power2.in" }, 7.0);
+
+      // Scene eindigt op 8s
+      tl.set({}, {}, 8);
 
       window.__timelines["scene3-charts"] = tl;
     </script>

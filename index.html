@@ -15,16 +15,16 @@
     <div data-hf-id="hf-o0gj" id="scene1" data-composition-id="scene1-logo-intro" data-composition-src="compositions/scene1-logo-intro.html" data-start="0" data-track-index="1"></div>
 
     <!-- 2 — Dashboard overzicht (donkerblauw) 0:05–0:08 -->
-    <div data-hf-id="hf-7iwp" id="scene2" data-composition-id="scene2-dashboard" data-composition-src="compositions/scene2-dashboard.html" data-start="scene1" data-track-index="1"></div>
+    <div data-hf-id="hf-7iwp" id="scene2" data-composition-id="scene2-dashboard" data-composition-src="compositions/scene2-dashboard.html" data-start="transition-1" data-track-index="1"></div>
 
     <!-- TX1 — tussentekst "Doorleef verschillende scenario's" — VOORLOPIG VERBORGEN (vervangen door caption in scene2) -->
-    <!-- <div data-hf-id="hf-sf4z" id="tx1" data-composition-id="scene-tussentekst" data-composition-src="compositions/scene-tussentekst.html" data-start="scene2" data-track-index="1" data-variable-values="{&quot;tekst&quot;:&quot;Doorleef verschillende scenario's&quot;,&quot;duur&quot;:&quot;2.5&quot;}"></div> -->
+    <!-- <div data-hf-id="hf-sf4z" id="tx1" data-composition-id="scene-tussentekst" data-composition-src="compositions/scene-tussentekst.html" data-start="scene2" data-track-index="1" data-variable-values="{&quot;tekst&quot;:&quot;Doorleef verschillende scenario's&quot;,&quot;duur&quot;:&quot;3&quot;}"></div> -->
 
-    <!-- 3 — Grafieken-kaarten (licht blauw) 0:07–0:12 -->
+    <!-- 3 — Grafieken-kaarten (licht blauw) -->
     <div data-hf-id="hf-sc3x" id="scene3" data-composition-id="scene3-charts" data-composition-src="compositions/scene3-charts.html" data-start="scene2" data-track-index="1"></div>
 
-    <!-- TX2 — tussentekst "Ontdek hoe jouw beleggingsstrategie uitpakt" (licht blauw) -->
-    <div data-hf-id="hf-t52t" id="tx2" data-composition-id="scene-tussentekst" data-composition-src="compositions/scene-tussentekst.html" data-start="scene3" data-track-index="1" data-variable-values="{&quot;tekst&quot;:&quot;Ontdek hoe jouw beleggingsstrategie uitpakt&quot;,&quot;duur&quot;:&quot;2.5&quot;}"></div>
+    <!-- TX2 — fade overgang met tekst (scene3→scene4) -->
+    <div data-hf-id="hf-t52t" id="tx2" data-composition-id="transition-wipe" data-composition-src="compositions/transition-wipe.html" data-start="scene3" data-track-index="2" data-variable-values="{&quot;tekst&quot;:&quot;Ontdek hoe jouw beleggingsstrategie uitpakt&quot;,&quot;duur&quot;:&quot;3.5&quot;,&quot;kleur&quot;:&quot;#ceecff&quot;}"></div>
 
     <!-- 4 — Beleidspaneel (licht blauw) 0:19–0:33 — cursor volgt zodra figma-cursor.svg beschikbaar is -->
     <div data-hf-id="hf-sc4x" id="scene4" data-composition-id="scene4-controls" data-composition-src="compositions/scene4-controls.html" data-start="tx2" data-track-index="1"></div>
@@ -32,13 +32,11 @@
     <!-- 5 — Logo-outro met call-to-action (donkerblauw) -->
     <div data-hf-id="hf-gtrx" id="scene5" data-composition-id="scene5-logo-outro" data-composition-src="compositions/scene5-logo-outro.html" data-start="scene4" data-track-index="1"></div>
 
-    <!-- T1 — mint-groene overgang donkerblauw→licht blauw, met openingstekst (over de cut scene1→scene2) -->
-    <div data-hf-id="hf-0rp3" id="transition-1" data-composition-id="transition-wipe" data-composition-src="compositions/transition-wipe.html" data-start="3.5" data-track-index="2" data-variable-values="{&quot;tekst&quot;:&quot;Ervaar om bestuurder in de WTP te zijn&quot;,&quot;duur&quot;:&quot;2&quot;}"></div>
+    <!-- T1 — fade overgang met openingstekst (scene1→scene2) -->
+    <div data-hf-id="hf-0rp3" id="transition-1" data-composition-id="transition-wipe" data-composition-src="compositions/transition-wipe.html" data-start="scene1" data-track-index="2" data-variable-values="{&quot;tekst&quot;:&quot;Ervaar om bestuurder in de WTP te zijn&quot;,&quot;duur&quot;:&quot;3.5&quot;,&quot;kleur&quot;:&quot;#ceecff&quot;}"></div>
 
-    <!-- T2 — donkerblauwe overgang licht blauw→donkerblauw richting outro (over het einde van scene4) -->
-    <div data-hf-id="hf-zcvx" id="transition-2" data-composition-id="transition-wipe" data-composition-src="compositions/transition-wipe.html" data-start="scene4 - 1.2" data-track-index="2" data-variable-values="{&quot;tekst&quot;:&quot;&quot;,&quot;duur&quot;:&quot;1.2&quot;,&quot;kleur&quot;:&quot;#000f47&quot;}"></div>
 
-    <!-- Achtergrondmuziek over de hele video -->
+<!-- Achtergrondmuziek over de hele video -->
     <audio data-hf-id="hf-w3wo" id="bg-music" data-start="0" data-duration="36.43" data-volume="0.7" src="assets/background-music.wav"></audio>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>

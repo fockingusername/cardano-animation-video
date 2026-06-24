@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700;900&display=swap" rel="stylesheet">
 
     <div id="db-stage" class="clip"
-         data-start="0" data-duration="5.5" data-track-index="0"
+         data-start="0" data-duration="8.0" data-track-index="0"
          style="position:absolute; inset:0; width:1920px; height:1080px;
                 display:flex; align-items:center; justify-content:center;">
 
@@ -49,8 +49,8 @@
       /* ── Tablet-frame (bezel) ── */
       #tablet-frame {
         position: relative;
-        width: 1160px;
-        height: 800px;
+        width: 1400px;
+        height: 900px;
         background: #e0e0e0;
         border-radius: 20px;
         padding: 22px;
@@ -88,8 +88,8 @@
       /* ── Schermgebied ── */
       #db-window {
         position: relative;
-        width: 1116px; /* 1160 - 2×22 */
-        height: 756px; /* 800 - 2×22 */
+        width: 1356px; /* 1400 - 2×22 */
+        height: 856px; /* 900 - 2×22 */
         border-radius: 8px;
         overflow: hidden;
       }
@@ -98,7 +98,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 1116px;
+        width: 1356px;
         height: auto;
       }
 
@@ -137,7 +137,7 @@
       /* ── Caption ── */
       #sc2-caption {
         position: absolute;
-        top: 870px; left: 0;
+        top: 895px; left: 0;
         background: #000f47;
         color: #ffffff;
         font-family: "Noto Sans", system-ui, sans-serif;
@@ -159,60 +159,65 @@
         background: #ffffff;
         height: 10px;
         pointer-events: none;
+        transform: scaleX(1);
+        transform-origin: right center;
       }
-      #bar-cover-1 { left: 91px; top: 242px; width: 314px; }
-      #bar-cover-2 { left: 89px; top: 242px; width: 258px; }
-      #bar-cover-3 { left: 93px; top: 246px; width: 260px; }
+      #bar-cover-1 { left: 87px; top: 236px; width: 313px; height: 13px; }
+      #bar-cover-2 { left: 87px; top: 236px; width: 254px; height: 13px; }
+      #bar-cover-3 { left: 87px; top: 236px; width: 254px; height: 13px; }
     </style>
 
     <script>
       window.__timelines = window.__timelines || {};
+      gsap.set(".bar-cover", { scaleX: 1, transformOrigin: "right center" });
       const tl = gsap.timeline({ paused: true });
 
-      // Caption schuift meteen in vanaf rechts — arriveert vóór het tablet zichtbaar is
+      // Caption schuift in vanaf rechts zodra de profielkaarten in beeld komen
       tl.fromTo("#sc2-caption",
-        { opacity: 1, x: 1920 },
-        { x: 0, duration: 0.8, ease: "power2.out" }, 0);
+        { opacity: 1, x: -1920 },
+        { x: 0, duration: 0.8, ease: "power2.out" }, 4.30);
 
       // Tablet venster rustig inschuiven
       tl.fromTo("#tablet-frame",
         { opacity: 0, scale: 0.94, y: 28 },
         { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0);
 
-      // Dashboard scrollt omhoog in de tablet
+      // Dashboard scrollt langzaam naar beneden — laat de volledige pagina zien
+      // SVG 1609px hoog, weergegeven op ~1247px; venster 756px → 491px scrollbaar
       tl.fromTo("#db-img",
         { y: 0 },
-        { y: -140, duration: 1.8, ease: "sine.inOut" }, 0.8);
+        { y: -659, duration: 3.2, ease: "power1.inOut" }, 0.8);
 
       // Tablet vervaagt als de kaarten in beeld komen (diepte-effect)
+      // Scroll eindigt op ~4.0s; kaarten komen 0.3s later
       tl.to("#tablet-frame",
-        { filter: "blur(6px)", duration: 0.6, ease: "power2.inOut" }, 2.35);
+        { filter: "blur(6px)", duration: 0.5, ease: "power2.inOut" }, 4.05);
 
       // 3 profielkaarten dalen vanuit boven in beeld, staggered 0.15s
       tl.fromTo("#card-1",
         { opacity: 0, y: -500 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.40);
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.30);
       tl.fromTo("#card-2",
         { opacity: 0, y: -500 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.55);
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.45);
       tl.fromTo("#card-3",
         { opacity: 0, y: -500 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.70);
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.60);
 
       // Progress bars: cover vegt weg van rechts → balk verschijnt van links naar rechts
-      // Start ~0.05s nadat elke kaart is geland
+      // Start 0.1s nadat elke kaart is geland (~4.85s, 5.0s, 5.15s)
       tl.fromTo("#bar-cover-1",
         { scaleX: 1, transformOrigin: "right center" },
-        { scaleX: 0, duration: 0.6, ease: "power2.inOut" }, 2.95);
+        { scaleX: 0, duration: 0.7, ease: "power2.inOut" }, 4.95);
       tl.fromTo("#bar-cover-2",
         { scaleX: 1, transformOrigin: "right center" },
-        { scaleX: 0, duration: 0.6, ease: "power2.inOut" }, 3.10);
+        { scaleX: 0, duration: 0.7, ease: "power2.inOut" }, 5.10);
       tl.fromTo("#bar-cover-3",
         { scaleX: 1, transformOrigin: "right center" },
-        { scaleX: 0, duration: 0.6, ease: "power2.inOut" }, 3.25);
+        { scaleX: 0, duration: 0.7, ease: "power2.inOut" }, 5.25);
 
-      // 1.5s standtijd na laatste progress bar (done at ~3.85s) → scene 5.5s
-      tl.set({}, {}, 5.5);
+      // Laatste bar klaar op ~5.95s; 2s standtijd → scene 8.0s
+      tl.set({}, {}, 8.0);
 
       window.__timelines["scene2-dashboard"] = tl;
     </script>

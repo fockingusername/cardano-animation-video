@@ -2,7 +2,7 @@
   <div id="scene4-controls" data-composition-id="scene4-controls" data-width="1920" data-height="1080">
 
     <div id="sc4-stage" class="clip"
-         data-start="0" data-duration="14" data-track-index="0"
+         data-start="0" data-duration="17" data-track-index="0"
          style="position:absolute; inset:0; width:1920px; height:1080px;
                 display:flex; align-items:center; justify-content:center;">
 
@@ -28,6 +28,9 @@
         </div>
         <div id="sc4-tablet-home"></div>
       </div>
+
+      <!-- Caption op stage-niveau (buiten tablet), identiek aan scene 2 -->
+      <div id="sc4-caption">Stel zelf je beleid samen</div>
     </div>
 
     <style>
@@ -61,16 +64,16 @@
         background: #F2F4F8;
       }
       /* SVG 1440px breed → geschaald naar 1356px → hoogte: 2629 × (1356/1440) ≈ 2475px */
-      /* clip-path verbergt rechterkolom (x=857–1356) in de scrollende laag */
+      /* clip-path verbergt rechterkolom (x=848–1356); 9px overlap dekt slider-track-eindpunten (SVG x=916→863px display) */
       #sc4-panel-img {
         position: absolute; top: 0; left: 0; width: 1356px; height: auto;
-        clip-path: inset(0 499px 0 0);
+        clip-path: inset(0 508px 0 0);
       }
 
-      /* Masker rechterkolom: legt paneel-achtergrond over scrollende laag (z=2, onder sticky z=3) */
+      /* Masker rechterkolom: uitgebreid tot left=848px om slider-tracks volledig te bedekken */
       #sc4-right-mask {
-        position: absolute; top: 0; left: 857px;
-        width: 499px; height: 100%;
+        position: absolute; top: 0; left: 848px;
+        width: 508px; height: 100%;
         background: #F2F4F8;
         z-index: 2; pointer-events: none;
       }
@@ -110,6 +113,22 @@
         transform-origin: center center;
       }
 
+      /* Caption */
+      #sc4-caption {
+        position: absolute;
+        top: 895px; left: 0;
+        background: #000f47;
+        color: #ffffff;
+        font-family: "Noto Sans", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 52px;
+        letter-spacing: 0.01em;
+        padding: 22px 48px;
+        white-space: nowrap;
+        opacity: 0;
+        z-index: 5;
+      }
+
       /* Cursor */
       #sc4-cursor {
         position: absolute; top: 0; left: 0;
@@ -129,35 +148,54 @@
 
       // Sectie 1 — bovenkant paneel leesbaar (0.8–3.0s stilstand)
 
+      // Caption schuift in vanuit links zodra het scrollen begint
+      tl.fromTo("#sc4-caption",
+        { opacity: 1, x: -1920 },
+        { x: 0, duration: 0.8, ease: "power2.out" }, 3.0);
+
       // Sectie 2 — scroll naar sliders (3.0–5.5s)
       tl.to("#sc4-panel-img", { y: -500, duration: 2.5, ease: "sine.inOut" }, 3.0);
       // Stilstand sliders (5.5–7.5s)
 
-      // Sectie 3 — scroll naar cohort-grafieken en wijzigingen-tabel (7.5–11.0s)
-      tl.to("#sc4-panel-img", { y: -1100, duration: 3.5, ease: "sine.inOut" }, 7.5);
-      // Stilstand grafieken/tabel tot einde (11.0–14.0s)
+      // Sectie 3 — scroll naar "Overrendementsratio per cohort" (7.5–9.5s)
+      // Sectie start op display y=1289px; toon ~150px van boven → scroll=1139≈1140px
+      tl.to("#sc4-panel-img", { y: -1140, duration: 2.0, ease: "sine.inOut" }, 7.5);
+      // Stilstand overrendementsratio (9.5–11.0s)
 
-      // Wijzigingen-panel: direct zichtbaar (geen fade-in)
+      // Sectie 4 — scroll naar "Beschermingsrendement per cohort" (11.0–12.5s)
+      // Sectie start op display y=1796px; toon ~300px van boven → scroll=1496≈1500px
+      tl.to("#sc4-panel-img", { y: -1500, duration: 1.5, ease: "sine.inOut" }, 11.0);
+      // Stilstand beschermingsrendement (12.5–12.8s)
 
-      // ── Cursor: verschijnt pas nadat scroll volledig is (t=11.0) ──
-      // Startpositie: net onder de UITVOEREN-knop, op passende afstand
+      // ── Cursor: verschijnt na laatste scroll (t=12.7) ──
       tl.set("#sc4-cursor", { x: 1060, y: 640 }, 0);
-      // Fade in na voltooien scroll
-      tl.to("#sc4-cursor", { opacity: 1, duration: 0.5, ease: "power2.out" }, 11.2);
-      // Cursor beweegt rustig omhoog naar de knop
-      tl.to("#sc4-cursor", { y: 575, duration: 0.8, ease: "power2.inOut" }, 11.8);
+      tl.to("#sc4-cursor", { opacity: 1, duration: 0.5, ease: "power2.out" }, 12.7);
+      // Cursor beweegt naar de knop
+      tl.to("#sc4-cursor", { y: 575, duration: 0.5, ease: "power2.inOut" }, 13.2);
 
-      // Klik op UITVOEREN (t=12.4 — ruim vóór T2 start t=12.8)
-      tl.to("#sc4-cursor",       { scale: 0.82, duration: 0.1, ease: "power2.in"  }, 12.4);
-      tl.to("#sc4-cursor",       { scale: 1,    duration: 0.15, ease: "power2.out" }, 12.5);
+      // ── Klik op UITVOEREN (t=13.7) ──
+      // Cursor drukt in
+      tl.to("#sc4-cursor", { scale: 0.80, duration: 0.08, ease: "power2.in"  }, 13.72);
+      tl.to("#sc4-cursor", { scale: 1,    duration: 0.12, ease: "power2.out" }, 13.80);
 
-      // ── UITVOEREN-knop klik-animatie: knop verschijnt, pulseert groter, fade out ──
-      tl.to("#sc4-uitvoeren-btn", { opacity: 1,    duration: 0.05                             }, 12.35);
-      tl.to("#sc4-uitvoeren-btn", { scale: 1.07,   duration: 0.18, ease: "power2.out"         }, 12.4);
-      tl.to("#sc4-uitvoeren-btn", { scale: 1,      duration: 0.22, ease: "power2.inOut"       }, 12.58);
-      tl.to("#sc4-uitvoeren-btn", { opacity: 0,    duration: 0.4,  ease: "power2.out"         }, 12.58);
+      // Knop verschijnt iets voor de klik
+      tl.to("#sc4-uitvoeren-btn", { opacity: 1, duration: 0.05 }, 13.65);
+      // Indrukken: schaal omlaag + verduister
+      tl.to("#sc4-uitvoeren-btn", { scale: 0.96, filter: "brightness(0.70)", duration: 0.08, ease: "power2.in"    }, 13.72);
+      // Loslaten: veer terug met kleine overshoot + oplichting
+      tl.to("#sc4-uitvoeren-btn", { scale: 1.02, filter: "brightness(1.15)", duration: 0.12, ease: "power2.out"   }, 13.80);
+      // Settelen
+      tl.to("#sc4-uitvoeren-btn", { scale: 1,    filter: "brightness(1)",    duration: 0.10, ease: "power2.inOut" }, 13.92);
+      // Fade out
+      tl.to("#sc4-uitvoeren-btn", { opacity: 0, duration: 0.35, ease: "power2.in" }, 14.15);
 
-      tl.set({}, {}, 14);
+      // Cursor verdwijnt rustig na klik
+      tl.to("#sc4-cursor", { opacity: 0, duration: 0.4, ease: "power2.in" }, 14.5);
+
+      // ── Cinematische zoom-out — pas na rustmoment na de klik ──
+      tl.to("#sc4-stage", { scale: 0.82, opacity: 0, duration: 1.0, ease: "power2.in" }, 15.5);
+
+      tl.set({}, {}, 17);
 
       window.__timelines["scene4-controls"] = tl;
     </script>

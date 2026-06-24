@@ -28,7 +28,7 @@
 |---|---------|------|--------|
 | 1 | `compositions/scene1-logo-intro.html` | 0:00–0:05 | Wit Cardano-logo op donkerblauw + witte tekst "PensionSim" |
 | T1 | `compositions/transition-wipe.html` | ~0:01 → | Groene overgang van donkerblauw naar licht blauw, met tekst "Ervaar om bestuurder in de WTP te zijn" |
-| 2 | `compositions/scene2-dashboard.html` | 0:05–0:07 | Overzichtsdashboard met de drie profielen |
+| 2 | `compositions/scene2-dashboard.html` | 0:05–0:13 | Langzame scroll door het volledige dashboard, daarna drie profielkaarten met progress bars |
 | TX | `compositions/scene-tussentekst.html` | 0:07 | Licht blauw scherm: "Doorleef verschillende scenario's" |
 | 3 | `compositions/scene3-charts.html` | 0:07–0:12 | Scenario / marktdata-grafieken |
 | TX | `compositions/scene-tussentekst.html` | 0:12 | Groen → licht blauw: "Ontdek hoe jouw beleggingsstrategie uitpakt" |
@@ -97,31 +97,38 @@ Een rustig **licht blauw scherm (`#ceecff`)** met één centrale zin in donkere/
 ## scene2-dashboard 👀
 
 **Bestand:** `compositions/scene2-dashboard.html`
-**Duur:** ~3 s (0:05–0:07)
+**Duur:** 8.0 s
 **Assets:**
-- `assets/figma-dashboard-overview-nl.svg` (Nederlandstalig dashboard met de drie profielen + grafieken eronder)
-- `assets/profile-1.svg` (Kaart Peter - happy)
-- `assets/profile-2.svg` (Kaart Naomi - neutraal)
-- `assets/profile-3.svg` (Kaart Mike - unhappy)
+- `assets/figma-dashboard-overview-nl.svg` (Nederlandstalig dashboard, 1440×1609 px, weergegeven op ~1247 px hoogte in het tabletvenster van 756 px)
+- `assets/profile-1.svg` (Kaart Peter - happy, groene balk)
+- `assets/profile-2.svg` (Kaart Naomi - neutraal, blauwe balk)
+- `assets/profile-3.svg` (Kaart Mike - unhappy, rode balk)
 
 **Beschrijving:**
-Het overzichtsdashboard verschijnt als zwevend tablet (enigzins herkenbaar als ipad maar gestileerd, met tablet dimensions) venster op de **licht blauwe** achtergrond (`#ceecff`). 
-En scrollt in het zwevende app venster het dashboard door.  
-**Nederlandstalige** schermversie gebruiken.
+Het overzichtsdashboard verschijnt als een gestileerd tabletvenster (iPad-achtig, 1160×800 px) op de **licht blauwe** achtergrond (`#ceecff`). Het dashboard scrollt langzaam van boven naar beneden zodat de volledige pagina te zien is. Daarna verschijnen de drie profielkaarten. **Nederlandstalige** schermversie gebruiken.
 
-**Animatiewensen:**
-- Tablet venster komt rustig binnen met heel lichte scale-up + zachte schaduw (`power2.out`, ~0.8 s).
-- De figma-dashboard-overview-nl.svg wordt rustig op de tablet doorgescrold. 
-- Voordat het tablet venster verschijnt en voordat de profielkaarten in beeld komt van rechts naar links een caption in beeld.
-- Deze stopt tegen de linkerzijde van het scherm, heeft een blauwe achtergrond met witte tekst "Doorleef verschillende scenario's". 
-- Als de deze volledig is doorgescrollt verschijnen vanaf de bovenzijde van het screen drie cards in beeld. 
-- De cards hebben een borderradius van 25px, en een padding van 20px.
-- De worden horizontaal naast elkaar met een nette gutter voor tussenruimte, over de tablet geplaatst.
-- Per card toont een profiel. Gebruik hier voor de profile svgs.
-- Per card de progress bar animeren.
-- Laat de cards wanneer geladen 1.5 sec in beeld
-- Korte standtijd, dan tussentekst "Doorleef verschillende scenario's" (0:07). VERBERG DEZE VOORLOPIG
-- laat de caption staan op deze positie in scene3
+**Animatietijdlijn:**
+
+| Tijdstip | Actie |
+|----------|-------|
+| 0.0 s | Tablet fadeert rustig in met lichte scale-up (`power2.out`, 0.8 s) |
+| 0.8 s | Dashboard begint **langzaam** omhoog te scrollen (`power1.inOut`, 3.2 s, 480 px) — laat de volledige pagina zien |
+| 4.0 s | Scroll bereikt de onderkant; korte pauze van ~0.3 s |
+| 4.05 s | Tablet wordt wazig (`blur 6px`, `power2.inOut`, 0.5 s) als diepte-effect vóór de kaarten |
+| 4.30 s | Kaart 1 (Peter) daalt vanuit bovenzijde in beeld (`power2.out`, 0.55 s); caption schuift gelijktijdig in van rechts naar links (`power2.out`, 0.8 s) |
+| 4.45 s | Kaart 2 (Naomi) daalt in beeld |
+| 4.60 s | Kaart 3 (Mike) daalt in beeld |
+| 4.95 s | Progress bar kaart 1 onthult van links naar rechts (witte cover schuift weg, `power2.inOut`, 0.7 s) |
+| 5.10 s | Progress bar kaart 2 onthult |
+| 5.25 s | Progress bar kaart 3 onthult |
+| ~5.95 s | Laatste progress bar klaar; kaarten blijven ~2 s in beeld |
+| 8.0 s | Einde scene |
+
+**Overige details:**
+- Caption: donkerblauwe achtergrond (`#000f47`), witte tekst "Doorleef verschillende scenario's", Noto Sans 700, 52 px; blijft op zijn positie staan in scene 3.
+- Drie kaarten horizontaal naast elkaar, gecentreerd (1518 px breed, gap 24 px), `border-radius: 25px`, `padding: 20px`, witte achtergrond, zachte schaduw.
+- Progress bar covers (witte vlakken die de gekleurde balk verbergen) zijn exact gepositioneerd op basis van de SVG-coördinaten: `left: 87px; top: 236px; height: 13px` — breedte varieert per kaart (313 px / 254 px / 254 px).
+- Korte standtijd, dan tussentekst "Doorleef verschillende scenario's". **VOORLOPIG VERBORGEN.**
 
 ---
 
@@ -137,26 +144,36 @@ En scrollt in het zwevende app venster het dashboard door.
 - `assets/vervangingratio-2.svg` (Kaart vervangingsratio)
 
 **Beschrijving:**
- Het tablet venster met figma-dashboard-overview-nl.svg staat faded in beeld zoals voor de overgang, er wordt gescrolld naar het onderste gedeelte van het scherm.  Toon direct de 3 profile cards, deze verdwijnen naar de onderzijde uit beeld. Wanneer de laatste profile card is verdwenen,  verschijnen vanaf de bovenzijde van het screen drie cards in beeld met de kaarten.
-  **licht blauwe** achtergrond (`#ceecff`). 
-**Nederlandstalige** schermversie gebruiken.
+Scene 3 sluit naadloos aan op het eindshot van scene 2: het tablet staat al wazig in beeld (`blur(6px)`), het dashboard staat vast op de onderkant (`y: -480px`), en de drie profielkaarten zijn zichtbaar. Er wordt **niet opnieuw gescrolld**. De scene begint direct met de kaarten die weggaan en nieuwe kaarten die instromen.
 
-**Assets specific**
-- animeer de lijntjes in de 3 kaarten.
+**Licht blauwe** achtergrond (`#ceecff`). **Nederlandstalige** schermversie gebruiken.
 
-**Animatiewensen:**
-- Het tablet venster met figma-dashboard-overview-nl.svg staat faded in beeld zoals voor de overgang, verberg de 3 profile cards.
-- Vervolgens verdwijnen de profile cards van het screen via de onderzijde van het screen. 
-- Vervolgens verschijnen vanaf de bovenzijde van het screen de drie nieuwe cards met de kaarten in beeld. 
-- Laat de cards wanneer geladen 1.5 sec in beeld
-- Vervolgens verdwijnen de nieuwe cards van het screen via de bovenzijde van het screen. 
-- Vervolgens verschijnen vanaf de linker en de rechterzijde van het screen de twee laatste cards in beeld, deze nemen samen dezelfde breedte in op scherm als de drie kaarten. 
-- Deze laatste twee charts moeten de cards netjes vullen.
-- De cards hebben een borderradius van 25px, en een padding van 20px.
-- De worden horizontaal naast elkaar met een nette gutter voor tussenruimte, over de tablet geplaatst.
-- Per card toont een kaart. 
-- Laat de cards wanneer geladen 1.5 sec in beeld
-- Korte standtijd, dan tussentekst "Ontdek hoe jouw beleggingsstrategie uitpakt" (0:12).
+**Aansluiting op scene 2 (eindstaat):**
+- `#sc3-db-img` start op `y: -480` (via `gsap.set`) — zelfde positie als einde scene 2, geen scroll
+- Tablet blijft wazig (`filter: blur(6px)`)
+- Caption staat al zichtbaar op zijn vaste positie linksonder
+
+**Animatietijdlijn:**
+
+| Tijdstip | Actie |
+|----------|-------|
+| 0.0 s | Profielkaart 1 (Peter) verdwijnt naar onderzijde scherm (`power2.in`, 0.4 s) |
+| 0.1 s | Profielkaart 2 (Naomi) verdwijnt |
+| 0.2 s | Profielkaart 3 (Mike) verdwijnt |
+| 0.8 s | Grafiekkaart 1 (ratio-1) daalt in vanuit bovenzijde (`power2.out`, 0.4 s) |
+| 0.9 s | Grafiekkaart 2 (solidariteits-2) daalt in |
+| 1.0 s | Grafiekkaart 3 (pensioen-3) daalt in |
+| 1.3–2.4 s | Grafieklijntjes onthullen van links naar rechts per kaart (cover schuift weg, `power2.inOut`, 0.8 s) |
+| 2.9–3.5 s | Golf 1-kaarten verdwijnen via bovenzijde scherm (`power2.in`, 0.4 s) |
+| 3.7 s | Golf 2: kaart 1 (market-1) schuift in van links, kaart 2 (vervangingratio-2) van rechts (`power2.out`, 0.5 s) |
+| 4.3–5.25 s | Grafieklijntjes golf 2 onthullen (`power2.inOut`, 0.8 s) |
+| 6.0 s | Einde scene |
+
+**Overige details:**
+- Golf 1: 3 kaarten, 488×479 px elk, gap 24 px, gecentreerd (1512 px breed, left 204 px)
+- Golf 2: 2 kaarten, `flex: 1` zodat ze samen dezelfde 1512 px breedte innemen
+- Alle kaarten: `border-radius: 25px`, `padding: 20px`, witte achtergrond, zachte schaduw
+- Grafiekcovers (`sc3-line-cover`): witte vlakken over het grafiekgebied, scaleX 1→0 (`transform-origin: right center`)
 
 ---
 
