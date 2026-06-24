@@ -141,6 +141,9 @@ En scrollt in het zwevende app venster het dashboard door.
   **licht blauwe** achtergrond (`#ceecff`). 
 **Nederlandstalige** schermversie gebruiken.
 
+**Assets specific**
+- animeer de lijntjes in de 3 kaarten.
+
 **Animatiewensen:**
 - Het tablet venster met figma-dashboard-overview-nl.svg staat faded in beeld zoals voor de overgang, verberg de 3 profile cards.
 - Vervolgens verdwijnen de profile cards van het screen via de onderzijde van het screen. 
@@ -167,7 +170,7 @@ En scrollt in het zwevende app venster het dashboard door.
 
 **Assets specifieke zaken**
 - figma-controls-panel-nl: het menu (bestaande uit: overzicht, markt, nieuws, beleid) dient sticky te zijn en niet mee te scrollen. 
-- Het block in de rechterkolom met als titel "Wijzigingen" dient ook sticky te zijn en niet mee te scrollen. Zorg dat de blauwe button ook op zijn positie blijft.
+- Het block in de rechterkolom met als titel "Wijzigingen" dient ook sticky te zijn en niet mee te scrollen en dient direct in beeld te staan. Zorg dat de blauwe button ook op zijn positie blijft.
 - Verberg het rechterblok op het scrollende gedeelte.
 - Zorg voor eenzelfde achtergrond kleur (licht grijs).
 
@@ -182,7 +185,7 @@ Het beleidsgedeelte. Het control-paneel komt rustig in beeld. In plaats van de e
 - Wijzigingen-tabel: getallen rustig faden in.
 - Geen snelle bewegingen — alles goed leesbaar en te volgen.
 - Wanneer de scroll volledig is fade de cursor in beeld onder de "uitvoeren" knop op passende afstand.
-- De cursor klikt de "Uitvoeren" knop wat rustig de overgang naar T2 start.
+- De cursor klikt de "Uitvoeren" knop, deze krijgt een klik animatie waarna rustig de overgang naar T2 start.
 
 ---
 
