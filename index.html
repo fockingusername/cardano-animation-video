@@ -36,6 +36,9 @@
       const tl = gsap.timeline({ paused: true });
       window.__timelines = window.__timelines || {};
       window.__timelines["cardano-animation-video"] = tl;
+
+      // Muziek fadeout: laatste 3 seconden van de video (t=47.5 → 50.5s)
+      tl.fromTo("#bg-music", { volume: 0.7 }, { volume: 0, duration: 3, ease: "sine.in" }, 47.5);
     </script>
   </div>
 </body>
