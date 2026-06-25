@@ -13,8 +13,8 @@
   <template id="transition-wipe-template">
     <div id="transition-wipe" data-composition-id="transition-wipe" data-width="1920" data-height="1080">
 
-      <div id="wipe-panel" class="clip" data-start="0" data-track-index="0"
-           style="position:fixed; inset:0; width:100%; height:100%; background:#000f47;
+      <div id="wipe-panel" class="clip" data-start="0" data-duration="3.5" data-track-index="0"
+           style="position:absolute; inset:0; width:1920px; height:1080px; background:#000f47;
                   z-index:9999; opacity:0;
                   display:flex; align-items:center; justify-content:center;
                   padding:0 200px; box-sizing:border-box;">
@@ -51,7 +51,7 @@
         const tl = gsap.timeline({ paused: true });
 
         // Fade in
-        tl.to("#wipe-panel", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 0);
+        tl.fromTo("#wipe-panel", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 0);
 
         if (tekst) {
           // Tekst zacht in
@@ -59,12 +59,13 @@
             { opacity: 0, y: 16 },
             { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.4);
           // Tekst zacht uit
-          tl.to("#wipe-tekst",
+          tl.fromTo("#wipe-tekst",
+            { opacity: 1, y: 0 },
             { opacity: 0, y: -10, duration: 0.4, ease: "power2.in" }, Math.max(1.0, totaal - 0.5));
         }
 
         // Fade out
-        tl.to("#wipe-panel", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, totaal - 0.5);
+        tl.fromTo("#wipe-panel", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.inOut" }, totaal - 0.5);
 
         tl.set({}, {}, totaal);
 
