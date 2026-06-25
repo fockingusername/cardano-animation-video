@@ -37,6 +37,9 @@
       window.__timelines = window.__timelines || {};
       window.__timelines["cardano-animation-video"] = tl;
 
+      // Muziek fadein: eerste 2 seconden (t=0 → 2s)
+      tl.fromTo("#bg-music", { volume: 0 }, { volume: 0.7, duration: 2, ease: "sine.out" }, 0);
+
       // Muziek fadeout: laatste 3 seconden van de video (t=47.5 → 50.5s)
       tl.fromTo("#bg-music", { volume: 0.7 }, { volume: 0, duration: 3, ease: "sine.in" }, 47.5);
     </script>
