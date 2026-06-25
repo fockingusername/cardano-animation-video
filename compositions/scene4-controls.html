@@ -23,12 +23,13 @@
           </div>
           <!-- Inner shadow overlay op de UITVOEREN-knop bij klik -->
           <div id="sc4-uitvoeren-btn"></div>
-          <!-- Click-burst streepjes links en rechts van de knop (gevuld via JS) -->
+          <!-- Click-burst links van de knop (gevuld via JS) -->
           <div id="sc4-burst-left"></div>
-          <div id="sc4-burst-right"></div>
           <!-- Muiscursor -->
           <img id="sc4-cursor" src="../assets/cursor.svg" alt="" aria-hidden="true" />
         </div>
+        <!-- Click-burst rechts buiten panel-window zodat overflow:hidden niet afknipt -->
+        <div id="sc4-burst-right"></div>
         <div id="sc4-tablet-home"></div>
       </div>
 
@@ -121,15 +122,16 @@
       }
 
       /* Click-burst — streepjes aan linker- en rechterzijde van de knop */
-      /* Knop: left=857 width=477 → right edge=1334, center-y=586 */
+      /* Knop in panel-window: left=857 width=477 → right edge=1334, center-y=586 */
       #sc4-burst-left, #sc4-burst-right {
         position: absolute;
         width: 0; height: 0;
-        top: 586px;
         z-index: 6; pointer-events: none;
       }
-      #sc4-burst-left  { left: 857px; }
-      #sc4-burst-right { left: 1334px; }
+      /* Links: relatief aan panel-window */
+      #sc4-burst-left  { left: 857px;  top: 586px; }
+      /* Rechts: relatief aan tablet-frame (+22px padding offset) — buiten overflow:hidden panel */
+      #sc4-burst-right { left: 1356px; top: 608px; }
       #sc4-burst-left .ray,
       #sc4-burst-right .ray {
         position: absolute; left: 0; top: 0;
@@ -165,8 +167,8 @@
       /* Cursor */
       #sc4-cursor {
         position: absolute; top: 0; left: 0;
-        width: 28px; height: auto;
-        z-index: 5; pointer-events: none; opacity: 0;
+        width: 56px; height: auto;
+        z-index: 5; pointer-events: none;
       }
     </style>
 
@@ -198,29 +200,27 @@
       tl.to("#sc4-panel-img", { y: -1500, duration: 1.5, ease: "sine.inOut" }, 9.5);
       // Stilstand beschermingsrendement (11.0–11.3s)
 
-      // ── Cursor: verschijnt na laatste scroll (t=11.2) ──
-      tl.set("#sc4-cursor", { x: 1060, y: 640 }, 0);
-      tl.to("#sc4-cursor", { opacity: 1, duration: 0.5, ease: "power2.out" }, 11.2);
-      // Cursor beweegt naar de knop
-      tl.to("#sc4-cursor", { y: 575, duration: 0.5, ease: "power2.inOut" }, 11.7);
+      // ── Cursor: schuift in via rechter rand (overflow:hidden knipt x>1356 af) ──
+      tl.set("#sc4-cursor", { x: 1500, y: 640 }, 0);
+      tl.fromTo("#sc4-cursor", { x: 1500 }, { x: 1060, duration: 0.3, ease: "power2.out" }, 11.2);
+      tl.fromTo("#sc4-cursor", { y: 640 }, { y: 575, duration: 0.5, ease: "power2.inOut" }, 11.7);
 
       // ── Klik op UITVOEREN (t=12.3) ──
-      // Indrukken: cursor zakt licht in én de knop wordt zichtbaar ingedrukt
-      tl.to("#sc4-cursor",       { y: 582,                 duration: 0.10, ease: "power2.in" }, 12.30);
-      tl.to("#sc4-uitvoeren-btn",{ opacity: 1, scale: 0.97, duration: 0.10, ease: "power2.in" }, 12.30);
+      tl.fromTo("#sc4-cursor",        { y: 575 }, { y: 582,                        duration: 0.10, ease: "power2.in"    }, 12.30);
+      tl.fromTo("#sc4-uitvoeren-btn", { opacity: 0, scale: 1 }, { opacity: 1, scale: 0.97, duration: 0.10, ease: "power2.in" }, 12.30);
 
-      // Kort ingedrukt houden, dan loslaten: knop veert terug, schaduw verdwijnt
-      tl.to("#sc4-cursor",       { y: 575,        duration: 0.22, ease: "back.out(2.2)" }, 12.48);
-      tl.to("#sc4-uitvoeren-btn",{ scale: 1,      duration: 0.22, ease: "back.out(2.2)" }, 12.48);
-      tl.to("#sc4-uitvoeren-btn",{ opacity: 0,    duration: 0.28, ease: "power2.out"   }, 12.56);
+      // Loslaten: knop veert terug, schaduw verdwijnt
+      tl.fromTo("#sc4-cursor",        { y: 582 }, { y: 575,     duration: 0.22, ease: "back.out(2.2)" }, 12.48);
+      tl.fromTo("#sc4-uitvoeren-btn", { scale: 0.97 }, { scale: 1, duration: 0.22, ease: "back.out(2.2)" }, 12.48);
+      tl.fromTo("#sc4-uitvoeren-btn", { opacity: 1 }, { opacity: 0, duration: 0.28, ease: "power2.out"  }, 12.56);
 
       // Click-burst: waaier van streepjes aan linker- en rechterkant van de knop
       // Verschijnt nadat de knop terug is geveerd (t=12.70)
       const BURST_T = 12.70;
       const RAYS = 3;
       [
-        { el: "#sc4-burst-left",  angleFrom:  45, angleTo:  135 }, // waaiert naar links
-        { el: "#sc4-burst-right", angleFrom: -135, angleTo: -45 }, // waaiert naar rechts
+        { el: "#sc4-burst-left",  angleFrom:  45, angleTo:  135 },
+        { el: "#sc4-burst-right", angleFrom: -135, angleTo:  -45 },
       ].forEach(({ el, angleFrom, angleTo }) => {
         const container = document.querySelector(el);
         for (let i = 0; i < RAYS; i++) {
@@ -234,13 +234,14 @@
           tl.fromTo(line,
             { y: 6, opacity: 0, scaleY: 0.4 },
             { y: 28, opacity: 1, scaleY: 1, duration: 0.18, ease: "power3.out" }, BURST_T + i * 0.015);
-          tl.to(line,
+          tl.fromTo(line,
+            { y: 28, opacity: 1, scaleY: 1 },
             { y: 50, opacity: 0, scaleY: 0.6, duration: 0.30, ease: "power2.in" }, BURST_T + 0.18 + i * 0.015);
         }
       });
 
-      // Cursor verdwijnt rustig na klik
-      tl.to("#sc4-cursor", { opacity: 0, duration: 0.4, ease: "power2.in" }, 12.8);
+      // Cursor schuift weer naar rechts buiten beeld
+      tl.fromTo("#sc4-cursor", { x: 1060 }, { x: 1500, duration: 0.3, ease: "power2.in" }, 12.8);
 
       // ── Cinematische zoom-in + achtergrond fade naar donkerblauw ──
       tl.to("#sc4-stage",        { scale: 1.18, opacity: 0,  duration: 1.0, ease: "power2.in" }, 13.0);
